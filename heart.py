@@ -19,7 +19,7 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(12, GPIO.OUT)
 
 
-similarity = 0
+similarity = 1
 
 def heart_handler(unused_addr, args, sim):
  # print(args[0])
@@ -38,7 +38,7 @@ def print_compute_handler(unused_addr, args, volume):
 
 def beat():
   while True:
-    factor = 1 - similarity
+    factor = similarity
     GPIO.output(12, 1)
     sleep(.09)
     GPIO.output(12, 0)

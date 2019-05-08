@@ -87,15 +87,19 @@ while True:
         face_encodings = face_recognition.face_encodings(output, face_locations)[0]
         # Print the location of each face in this image
         top, right, bottom, left = face_location
+
+        image_w = right-left
+        image_h = bottom-top
+        
         print("A face is located at pixel location Top: {}, Left: {}, Bottom: {}, Right: {}".format(top, left, bottom, right))
-        margin = 15
-        top -= margin
+        margin =.2 
+        top -= int(margin * 2 * image_h)
         top = max(top,0)
-        bottom += margin
+        bottom += int(margin *2 * image_h)
         bottom = min(bottom,cam_h)
-        left -= margin
+        left -= int(margin * image_w)
         left = max(0,left)
-        right += margin
+        right += int(margin * image_w)
         right = min(right,cam_w)
 
         # You can access the actual face itself like this:
@@ -120,8 +124,6 @@ while True:
       
         papirus.writeCool(pil_image)
 
-       
-
         ariel_sim_scores = face_recognition.face_distance(ariel_encodings, face_encodings)
        # print(ariel_sim_score)
         ariel_score = min(ariel_sim_scores)
@@ -131,8 +133,8 @@ while True:
         fabi_score = min(ariel_sim_scores)
 
         
-      #  similarity = fabi_score*.8 + ariel_score*.2
-        similarity = ariel_score
+        similarity = fabi_score*.75 + ariel_score*.25
+      #  similarity = ariel_score
         print(similarity)
         client.send_message("/heart", similarity)
 
